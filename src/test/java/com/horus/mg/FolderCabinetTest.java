@@ -10,7 +10,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 class FolderCabinetTest {
 
     private FolderCabinet folderCabinet;
