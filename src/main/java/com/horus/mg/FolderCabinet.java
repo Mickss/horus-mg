@@ -13,27 +13,23 @@ public class FolderCabinet implements Cabinet {
 
     @Override
     public Optional<Folder> findFolderByName(String name) {
-        List<Folder> tempMultiFolders = new ArrayList<>();
-        List<Folder> flattenFolders = iterateFolderList(folders, tempMultiFolders);
-        flattenFolders.addAll(tempMultiFolders);
+        List<Folder> flattenFolders = (iterateFolderList(folders));
         return flattenFolders.stream().filter(f -> name.equals(f.name())).findAny();
     }
 
     @Override
     public List<Folder> findFoldersBySize(String size) {
-        List<Folder> tempMultiFolders = new ArrayList<>();
-        List<Folder> flattenFolders = iterateFolderList(folders, tempMultiFolders);
-        flattenFolders.addAll(tempMultiFolders);
+        List<Folder> flattenFolders = (iterateFolderList(folders));
         return flattenFolders.stream().filter(f -> f.size().equals(size)).toList();
     }
 
-    private List<Folder> iterateFolderList(List<Folder> toIterate, List<Folder> tempMultiFolders) {
+    private List<Folder> iterateFolderList(List<Folder> toIterate) {
         List<Folder> folders = new ArrayList<>();
         for (Folder folder : toIterate) {
             if (folder instanceof MultiFolder) {
                 List<Folder> subFolders = ((MultiFolder) folder).folders();
-                folders.addAll(iterateFolderList(subFolders, tempMultiFolders));
-                tempMultiFolders.add(folder);
+                folders.addAll(iterateFolderList(subFolders));
+                folders.add(folder);
             } else {
                 folders.add(folder);
             }
